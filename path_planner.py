@@ -96,8 +96,38 @@ class PathPlanner(object):
         # Todo: implement the Greedy Search algorithm
         # The first return is the path as sequence of tuples (as returned by the method construct_path())
         # The second return is the cost of the path
+        global path, cost
+        pq = []
+        start = self.node_grid.get_node(start_position[0], start_position[1])
+        goal_node = self.node_grid.get_node(goal_position[0], goal_position[1])
+        start_cost = start.distance_to(goal_node.i, goal_node.j)
+        # start_cost = self.cost_map.get_edge_cost(start_position, goal_position)
+        heapq.heappush(pq, (start_cost, start))
+
+        while len(pq) > 0:
+            cost, node = heapq.heappop(pq)
+            if isinstance(node, tuple):
+                node_start = self.node_grid.get_node(node[0], node[1])
+            else:
+                node_start = self.node_grid.get_node(node.i, node.j)
+
+            node_start.closed = True
+
+            for successor in self.node_grid.get_successors(node_start.i, node_start.j):
+                successor_node = self.node_grid.get_node(successor[0], successor[1])
+
+                successor_node.f = successor_node.distance_to(goal_node.i, goal_node.j)
+
+                if not successor_node.closed:
+                    successor_node.parent = node_start
+                    successor_node.closed = True
+                    heapq.heappush(pq, (successor_node.f, successor_node))
+
+                if successor == goal_position:
+                    path = self.construct_path(successor_node)
+
         self.node_grid.reset()
-        return [], inf
+        return path, cost
 
     def a_star(self, start_position, goal_position):
         """
