@@ -101,7 +101,6 @@ class PathPlanner(object):
         start = self.node_grid.get_node(start_position[0], start_position[1])
         goal_node = self.node_grid.get_node(goal_position[0], goal_position[1])
         start_cost = start.distance_to(goal_node.i, goal_node.j)
-        # start_cost = self.cost_map.get_edge_cost(start_position, goal_position)
         heapq.heappush(pq, (start_cost, start))
 
         while len(pq) > 0:
