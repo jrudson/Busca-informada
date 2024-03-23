@@ -96,7 +96,6 @@ class PathPlanner(object):
         # Todo: implement the Greedy Search algorithm
         # The first return is the path as sequence of tuples (as returned by the method construct_path())
         # The second return is the cost of the path
-
         self.node_grid.reset()
         return [], inf
 
