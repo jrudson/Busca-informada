@@ -89,7 +89,9 @@ for i in range(num_iterations):
     while not problem_valid:
         # Trying to generate a new problem
         start_position = (random.randint(0, HEIGHT - 1), random.randint(0, WIDTH - 1))
+        # start_position = (10, 10)
         goal_position = (random.randint(0, HEIGHT - 1), random.randint(0, WIDTH - 1))
+        # goal_position = (40, 140)
         # If the start or goal positions happen to be within an obstacle, we discard them and
         # try new samples
         if cost_map.is_occupied(start_position[0], start_position[1]):
